@@ -1,0 +1,21 @@
+{
+  "name": "broccoli-underscore-template-compiler",
+  "version": "0.1.0",
+  "description": "Broccoli plugin to compile Underscore templates to ES6 modules.",
+  "main": "index.js",
+  "author": "Dan Freeman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salsify/broccoli-underscore-template-compiler.git"
+  },
+  "keywords": [
+    "broccoli-plugin",
+    "underscore",
+    "template"
+  ],
+  "dependencies": {
+    "broccoli-filter": "^0.1.6",
+    "lodash-node": "^2.4.1"
+  }
+}
