@@ -45,6 +45,29 @@ default export, as well as an exported variable of the same name, with any data
 attributes on the template available under a `metadata` hash hanging off of the
 resulting function.
 
+## Usage
+
+The templates produced by this filter are just the output of Underscore's `_.template` function, so you can use them as [their documentation](http://underscorejs.org/#template) suggests:
+
+```js
+var helloTemplate = _.template("hello: <%= name %>");
+helloTemplate({ name: 'moe' });
+//=> "hello: moe"
+```
+
+The exported template function is exposed from the compiled module, e.g.
+
+```html
+<!-- templates/my-templates.html -->
+<template id="helloTemplate">hello: <%= name %></template>
+```
+
+```js
+import { helloTemplate } from 'templates/my-templates';
+helloTemplate({ name: 'moe' });
+//=> "hello: moe"
+```
+
 ## Configuration
 
 ### `compileTemplates(inputTree, options)`
