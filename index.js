@@ -1,30 +1,20 @@
-var Filter = require('broccoli-filter');
-var template = require('lodash-node/modern/utilities/template');
+const Filter = require('broccoli-persistent-filter');
+const template = require('lodash-node/modern/utilities/template');
 
-UnderscoreTemplateCompiler.prototype = Object.create(Filter.prototype);
-UnderscoreTemplateCompiler.prototype.constructor = UnderscoreTemplateCompiler;
-
-function UnderscoreTemplateCompiler(inputTree, options) {
-  if (!(this instanceof UnderscoreTemplateCompiler)) return new UnderscoreTemplateCompiler(inputTree, options);
-
-  options = options || {};
-
-  Filter.apply(this, arguments);
-}
-
-UnderscoreTemplateCompiler.prototype.extensions = ['html'];
-UnderscoreTemplateCompiler.prototype.targetExtension = 'js';
-
-UnderscoreTemplateCompiler.prototype.processString = function(content, file) {
-  var named = parseNamedTemplates(content, file);
-  if (!named.length) {
-    return writeSingleTemplate(templateBody(content));
-  } else {
-    return writeNamedTemplates(named);
+module.exports = class UnderscoreTemplateCompiler extends Filter {
+  constructor(input, options = {}) {
+    super(input, Object.assign({ extensions: ['html'], targetExtension: 'js' }, options));
   }
-};
 
-module.exports = UnderscoreTemplateCompiler;
+  processString(content, file) {
+    let named = parseNamedTemplates(content, file);
+    if (!named.length) {
+      return writeSingleTemplate(templateBody(content));
+    } else {
+      return writeNamedTemplates(named);
+    }
+  }
+}
 
 var R_NAMED_TEMPLATE = /<(script|template)\b([^>]*)>([\s\S]*?)<\/\1>/gm;
 function parseNamedTemplates(content, file) {
@@ -45,9 +35,9 @@ function parseNamedTemplates(content, file) {
 var R_ID = /id=(['"]?)(\w+?)\1/mi;
 function parseTemplateId(attrString, file) {
   var id = R_ID.exec(attrString)[2];
-  
+
   if (!id) throw new Error('Found a template missing an ID in ' + file);
-  
+
   return id;
 }
 
@@ -55,7 +45,7 @@ var R_DATA_ATTRIBUTE = /data-([^=]+)=(['"]?)(.+?)\2/gmi;
 function parseTemplateMetadata(attrString, file) {
   var metadata = {},
       match;
-  
+
   while (match = R_DATA_ATTRIBUTE.exec(attrString)) {
     metadata[match[1].toLowerCase()] = match[3];
   }
