@@ -15,7 +15,10 @@
     "template"
   ],
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
+    "broccoli-persistent-filter": "^2.1.1",
     "lodash-node": "^2.4.1"
+  },
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
   }
 }
