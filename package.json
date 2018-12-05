@@ -1,6 +1,6 @@
 {
   "name": "broccoli-underscore-template-compiler",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Broccoli plugin to compile Underscore templates to ES6 modules.",
   "main": "index.js",
   "author": "Dan Freeman",
